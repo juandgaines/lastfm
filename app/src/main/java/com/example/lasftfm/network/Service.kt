@@ -1,5 +1,6 @@
 package com.example.lasftfm.network
 
+import com.example.lasftfm.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -13,13 +14,13 @@ interface LastFmService {
     @GET("2.0/?method=geo.gettoptracks&format=json")
     suspend fun getTracksList(
         @Query("country") country: String,
-        @Query("api_key") apiKey: String
+        @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
     ): Deferred<ResponseTrack>
 
     @GET("2.0/?method=geo.gettopartists&format=json")
     suspend fun getArtistList(
         @Query("country") country: String,
-        @Query("api_key") apiKey: String
+        @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
     ): Deferred<ResponseArtists>
 
 }
