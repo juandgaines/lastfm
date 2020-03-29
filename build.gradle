@@ -9,6 +9,7 @@ buildscript {
     ext.roomVersion='2.2.5'
     ext.archComponentsVersion='2.2.0'
     ext.pagingVersion='2.1.2'
+    ext.okhttpLoggingInterceptorVersion='4.2.2'
 
     repositories {
         google()
