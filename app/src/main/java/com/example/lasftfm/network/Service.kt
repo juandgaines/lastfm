@@ -14,14 +14,16 @@ interface LastFmService {
     @GET("2.0/?method=geo.gettoptracks&format=json")
     suspend fun getTracksList(
         @Query("country") country: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
-    ): Deferred<ResponseTrack>
+    ): ResponseTrack
 
     @GET("2.0/?method=geo.gettopartists&format=json")
     suspend fun getArtistList(
         @Query("country") country: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
-    ): Deferred<ResponseArtists>
+    ): ResponseTrack
 
 }
 
@@ -31,7 +33,7 @@ object Network {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://ws.audioscrobbler.com/")
+        .baseUrl("https://ws.audioscrobbler.com/")
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 

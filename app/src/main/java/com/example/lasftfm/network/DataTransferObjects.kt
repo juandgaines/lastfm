@@ -1,15 +1,14 @@
 package com.example.lasftfm.network
 
 import com.squareup.moshi.Json
-
-data class ResponseArtists(
-    val topartists: Topartists
+data class ResponseTrack(
+    val tracks: Tracks
 )
 
-data class Topartists(
+data class Tracks(
     @Json(name = "@attr")
     val attr: Attr,
-    val artist: List<Artist>
+    val track: List<Track>
 )
 
 data class Attr(
@@ -18,25 +17,6 @@ data class Attr(
     val perPage: String,
     val total: String,
     val totalPages: String
-)
-
-data class Artist(
-    val image: List<Image>,
-    val listeners: String,
-    val mbid: String,
-    val name: String,
-    val streamable: String,
-    val url: String
-)
-
-data class ResponseTrack(
-    val tracks: TracksX
-)
-
-data class TracksX(
-    @Json(name = "@attr")
-    val attr: Attr,
-    val track: List<Track>
 )
 
 data class Track(
@@ -56,6 +36,11 @@ data class AttrX(
     val rank: String
 )
 
+data class Artist(
+    val mbid: String,
+    val name: String,
+    val url: String
+)
 
 data class Image(
     @Json(name = "#text")
@@ -66,6 +51,5 @@ data class Image(
 data class Streamable(
     @Json(name = "#text")
     val text: String,
-    @Json(name = "fulltrack")
-    val fullTrack: String
+    val fulltrack: String
 )
