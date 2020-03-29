@@ -28,16 +28,14 @@ class MainActivity : AppCompatActivity() {
 
         val dataSource = LastFmDatabase.getInstance(application).lastFmDao()
 
-        val viewModelFactory = LastFmViewModelFactory(dataSource, application)
+        val viewModelFactory = LastFmViewModelFactory(application)
 
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
 
-
-        lastFmViewModel.getTracks().observe(this, Observer {
+        lastFmViewModel.tracks.observe(this, Observer {
             it
         })
 
-        lastFmViewModel.fetchTracks()
     }
 }

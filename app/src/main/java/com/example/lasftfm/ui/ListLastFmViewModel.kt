@@ -5,48 +5,29 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.lasftfm.db.LastFmDao
+import com.example.lasftfm.db.LastFmDatabase
 import com.example.lasftfm.network.Network
 import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.LastFmRepo
 import kotlinx.coroutines.*
 
-class ListLastFmViewModel(val database: LastFmDao, application: Application) :
+class ListLastFmViewModel(application: Application) :
     AndroidViewModel(application) {
 
 
+    private val database=LastFmDatabase.getInstance(application)
+    private val lastFmRepo=LastFmRepo(database)
+
     private var viewModelJob = Job()
     private val couroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
+    val tracks=lastFmRepo.tracks
 
     init {
 
-
-    }
-
-    fun fetchTracks() {
         couroutineScope.launch {
-            try {
-                var getTracksDeferred = Network.lastFm.getTracksList("spain", 1)
-                insertTracks(getTracksDeferred.tracks.track)
-
-            } catch (e: Throwable) {
-                Log.e("MainActivity", "${e.message}")
-            }
+            lastFmRepo.refreshVideos()
         }
-    }
 
-    private fun insertTracks(tracks: List<Track>) {
-        couroutineScope.launch {
-            insert(tracks)
-        }
-    }
-
-    fun getTracks(): LiveData<List<Track>> {
-             return database.listOfTracks()
-    }
-
-    private suspend fun insert(tracks: List<Track>) {
-        return withContext(Dispatchers.IO) {
-            database.insert(tracks)
-        }
     }
 
     override fun onCleared() {
@@ -56,13 +37,12 @@ class ListLastFmViewModel(val database: LastFmDao, application: Application) :
 }
 
 class LastFmViewModelFactory(
-    private val dataSource: LastFmDao,
     private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListLastFmViewModel::class.java)) {
-            return ListLastFmViewModel(dataSource, application) as T
+            return ListLastFmViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
