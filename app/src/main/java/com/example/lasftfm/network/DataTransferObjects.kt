@@ -1,6 +1,11 @@
 package com.example.lasftfm.network
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
+
+//region tracks
 data class ResponseTrack(
     val tracks: Tracks
 )
@@ -19,21 +24,23 @@ data class Attr(
     val totalPages: String
 )
 
+@Entity(tableName = "tracks")
 data class Track(
-    @Json(name = "@attr")
-    val attr: AttrX,
-    val artist: Artist,
-    val duration: String,
-    val image: List<Image>,
-    val listeners: String,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val mbid: String,
+    @ColumnInfo(name = "name")
     val name: String,
-    val streamable: Streamable,
-    val url: String
-)
-
-data class AttrX(
-    val rank: String
+    @ColumnInfo(name = "duration")
+    val duration: String,
+    @ColumnInfo(name = "listeners")
+    val listeners: String,
+    @ColumnInfo(name = "url")
+    val url: String,
+    @ColumnInfo(name = "images")
+    val image: List<Image>,
+    @ColumnInfo(name = "artist")
+    val artist: Artist
 )
 
 data class Artist(
@@ -47,9 +54,4 @@ data class Image(
     val text: String,
     val size: String
 )
-
-data class Streamable(
-    @Json(name = "#text")
-    val text: String,
-    val fulltrack: String
-)
+//endregion

@@ -21,10 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(DebugTree())
-        }
-
         couroutineScope.launch {
             try {
                 var getTracksDeferred=Network.lastFm.getTracksList("spain",1)
