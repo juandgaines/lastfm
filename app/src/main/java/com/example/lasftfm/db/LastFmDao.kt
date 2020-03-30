@@ -12,7 +12,7 @@ interface LastFmDao {
     fun insert(posts: List<Track>)
 
     @Query("SELECT * FROM tracks ORDER BY id ASC")
-    fun listOfTracks(): LiveData<List<Track>>
+    fun listOfTracks():DataSource.Factory<Int, Track>
 
     @Query("DELETE FROM tracks")
     fun clearTracks()
