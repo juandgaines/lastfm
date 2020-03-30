@@ -11,8 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         tools:context=".ui.fragments.SelectionFragment">
-
-        <!-- TODO: Update blank fragment layout -->
         <TextView
             android:id="@+id/tracks"
             android:layout_width="0dp"
@@ -34,6 +32,5 @@
             android:text="@string/artists"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
-
     </LinearLayout>
 </layout>
