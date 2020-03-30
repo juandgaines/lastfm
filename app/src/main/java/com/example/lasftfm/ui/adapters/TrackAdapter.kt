@@ -1,4 +1,4 @@
-package com.example.lasftfm.ui
+package com.example.lasftfm.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,10 +11,14 @@ import com.example.lasftfm.databinding.ItemTrackViewBinding
 import com.example.lasftfm.network.Track
 
 class TrackAdapter(val trackListener: TrackListener) :
-    PagedListAdapter<Track, TrackViewHolder>(TracksDiffCallback()) {
+    PagedListAdapter<Track, TrackViewHolder>(
+        TracksDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        return TrackViewHolder.from(parent)
+        return TrackViewHolder.from(
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {

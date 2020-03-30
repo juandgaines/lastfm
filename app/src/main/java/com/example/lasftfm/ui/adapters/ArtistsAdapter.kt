@@ -1,4 +1,4 @@
-package com.example.lasftfm.ui
+package com.example.lasftfm.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,15 +7,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lasftfm.databinding.ItemArtistViewBinding
-import com.example.lasftfm.databinding.ItemTrackViewBinding
 import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.Track
 
 class ArtistsAdapter(val trackListener: ArtistListener) :
-    PagedListAdapter<Artist2, ArtistsViewHolder>(ArtistsDiffCallback()) {
+    PagedListAdapter<Artist2, ArtistsViewHolder>(
+        ArtistsDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistsViewHolder {
-        return ArtistsViewHolder.from(parent)
+        return ArtistsViewHolder.from(
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: ArtistsViewHolder, position: Int) {

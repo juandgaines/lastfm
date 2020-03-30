@@ -9,7 +9,7 @@
             type="com.example.lasftfm.network.Track" />
         <variable
             name="listener"
-            type="com.example.lasftfm.ui.TrackListener" />
+            type="com.example.lasftfm.ui.adapters.TrackListener" />
 
     </data>
 

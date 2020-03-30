@@ -12,7 +12,7 @@ interface LastFmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(posts: List<Track>)
 
-    @Query("SELECT * FROM tracks ORDER BY id ASC")
+    @Query("SELECT * FROM tracks")
     fun listOfTracks():DataSource.Factory<Int, Track>
 
     @Query("DELETE FROM tracks")
@@ -21,7 +21,7 @@ interface LastFmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertArtist(posts: List<Artist2>)
 
-    @Query("SELECT * FROM artists ORDER BY id ASC")
+    @Query("SELECT * FROM artists")
     fun listOfArtist():DataSource.Factory<Int, Artist2>
 
     @Query("DELETE FROM artists")

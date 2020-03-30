@@ -9,7 +9,7 @@
             type="com.example.lasftfm.network.Artist2" />
         <variable
             name="listener"
-            type="com.example.lasftfm.ui.ArtistListener" />
+            type="com.example.lasftfm.ui.adapters.ArtistListener" />
 
     </data>
 
