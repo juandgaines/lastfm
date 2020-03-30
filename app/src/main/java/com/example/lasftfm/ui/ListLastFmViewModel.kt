@@ -16,8 +16,8 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     private val couroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
     private val _trackResult = MutableLiveData<TrackResults>()
     private val _artistResult = MutableLiveData<ArtistsResults>()
-    private val _queryLiveDataTracks = MutableLiveData<String>()
-    private val _queryLiveDataArtists = MutableLiveData<String>()
+    var queryLiveDataTracks=""
+    var queryLiveDataArtists = ""
 
     val tracks: LiveData<PagedList<Track>> =
         Transformations.switchMap(_trackResult) { it -> it.data }
@@ -32,24 +32,6 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
         Transformations.switchMap(_artistResult) { it ->
             it.networkErrors
         }
-    val queryLiveDataTracks: LiveData<String>
-        get() = Transformations.map(_queryLiveDataTracks) {
-            if(it==null){
-                "%"
-            }
-            else{
-                "%${it}%"
-            }
-        }
-    val queryLiveDataArtist: LiveData<String>
-        get() = Transformations.map(_queryLiveDataArtists) {
-            if(it==null){
-                "%"
-            }
-            else{
-                "%${it}%"
-            }
-        }
 
     init {
         fetchTracks("%")
@@ -57,11 +39,20 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     }
 
     fun fetchTracks(query: String?) {
-        _trackResult.value = repository.fetch(couroutineScope, query ?: "%")
+        convertToQueryForDb(query)
+        _trackResult.value = repository.fetch(couroutineScope, convertToQueryForDb(query))
+    }
+
+    private fun convertToQueryForDb(query: String?) :String{
+        return if (query == null) {
+            "%"
+        } else {
+            "%${query}%"
+        }
     }
 
     fun fetchArtists(query: String?) {
-        _artistResult.value = repository.fetchArtist(couroutineScope, query ?: "%")
+        _artistResult.value = repository.fetchArtist(couroutineScope, convertToQueryForDb(query))
     }
 
     override fun onCleared() {
@@ -70,7 +61,7 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     }
 
     fun updateQuery(query: String) {
-        _queryLiveDataTracks.value=query
+        queryLiveDataTracks=query
     }
 }
 

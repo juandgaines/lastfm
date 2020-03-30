@@ -55,14 +55,21 @@ class TracksFragment : Fragment() {
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                lastFmViewModel.updateQuery(s.toString())
+                val query= s.toString()
+                lastFmViewModel.updateQuery(query)
+                adapterTracks.submitList(null)
+                lastFmViewModel.fetchTracks(query)
             }
 
         })
+        binding.searchText.setText(lastFmViewModel.queryLiveDataTracks)
 
-        lastFmViewModel.queryLiveDataTracks.observe(viewLifecycleOwner, Observer {
-            adapterTracks.submitList(null)
-            lastFmViewModel.fetchTracks(it)
+        lastFmViewModel.tracks.observe(viewLifecycleOwner, Observer {
+            Log.d("Activity", "list: ${it?.size}")
+            adapterTracks.submitList(it)
+        })
+        lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
+            Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
         })
 
         return binding.root
@@ -76,13 +83,7 @@ class TracksFragment : Fragment() {
                 Toast.makeText(activity!!.applicationContext, "$it", Toast.LENGTH_SHORT).show()
             })
         binding.trackList.adapter = adapterTracks
-        lastFmViewModel.tracks.observe(viewLifecycleOwner, Observer {
-            Log.d("Activity", "list: ${it?.size}")
-            adapterTracks.submitList(it)
-        })
-        lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
-            Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
-        })
+
     }
 
 }
