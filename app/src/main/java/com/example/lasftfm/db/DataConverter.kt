@@ -3,6 +3,7 @@ package com.example.lasftfm.db
 import android.provider.MediaStore
 import androidx.room.TypeConverter
 import com.example.lasftfm.network.Artist
+import com.example.lasftfm.network.Artist2
 import com.example.lasftfm.network.Image
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -39,6 +40,23 @@ class DataConverter {
     fun artistToString(artist: Artist): String {
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         val jsonAdapter = moshi.adapter<Artist>(Artist::class.java)
+        val json = jsonAdapter.toJson(artist)
+        return json
+
+    }
+
+
+    @TypeConverter
+    fun stringToArtist2(artist: String): Artist2 {
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val adapter = moshi.adapter(Artist2::class.java)
+        return adapter.fromJson(artist)!!
+    }
+
+    @TypeConverter
+    fun artistToString(artist: Artist2): String {
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        val jsonAdapter = moshi.adapter<Artist2>(Artist2::class.java)
         val json = jsonAdapter.toJson(artist)
         return json
 

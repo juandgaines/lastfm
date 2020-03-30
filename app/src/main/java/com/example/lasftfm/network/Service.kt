@@ -42,7 +42,7 @@ interface LastFmService {
         @Query("country") country: String,
         @Query("page") page: Int,
         @Query("api_key") apiKey: String = BuildConfig.LASTFM_KEY
-    ): ResponseTrack
+    ): ResponseArtist
 
 }
 

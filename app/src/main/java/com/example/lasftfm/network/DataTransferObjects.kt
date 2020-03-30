@@ -55,3 +55,23 @@ data class Image(
     val size: String
 )
 //endregion
+
+
+data class ResponseArtist(
+    val topartists: Topartists
+)
+
+data class Topartists(
+    @Json(name = "@attr")
+    val attr: Attr,
+    val artist: List<Artist>
+)
+
+data class Artist2(
+    val image: List<Image>,
+    val listeners: String,
+    val mbid: String,
+    val name: String,
+    val streamable: String,
+    val url: String
+)
