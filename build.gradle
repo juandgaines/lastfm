@@ -10,6 +10,7 @@ buildscript {
     ext.archComponentsVersion='2.2.0'
     ext.pagingVersion='2.1.2'
     ext.okhttpLoggingInterceptorVersion='4.2.2'
+    ext.glide_version='4.11.0'
 
     repositories {
         google()

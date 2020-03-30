@@ -11,7 +11,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
-    dataBinding.enabled=true
+    dataBinding.enabled = true
     defaultConfig {
         applicationId "com.example.lasftfm"
         minSdkVersion 14
@@ -71,4 +71,7 @@ dependencies {
 
     //Log
     implementation "com.jakewharton.timber:timber:$version_timber"
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 }

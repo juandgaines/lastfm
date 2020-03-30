@@ -8,8 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lasftfm.R
+import com.example.lasftfm.databinding.ItemTrackViewBinding
 import com.example.lasftfm.network.Track
+import kotlinx.coroutines.flow.combine
 
 class TrackAdapter: ListAdapter<Track, TrackViewHolder>(TracksDiffCallback()) {
 
@@ -19,23 +22,24 @@ class TrackAdapter: ListAdapter<Track, TrackViewHolder>(TracksDiffCallback()) {
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = getItem(position)
-        holder.nameText.text = item.name
+        holder.bind(item)
     }
 }
 
-class TrackViewHolder private  constructor(itemView: View): RecyclerView.ViewHolder(itemView){
-    val nameText: TextView = itemView.findViewById(R.id.track_name)
+class TrackViewHolder private  constructor(val binding: ItemTrackViewBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(item: Track) {
-        val name = itemView.context.resources
+        val context=binding.containerTrackItem.context
+        binding.track=item
+        Glide.with(context).load(item.image.last().text).centerCrop().into(binding.trackPick)
+        binding.executePendingBindings()
     }
 
     companion object {
         fun from(parent: ViewGroup): TrackViewHolder {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater
-                .inflate(R.layout.item_track_view, parent, false)
-            return TrackViewHolder(view)
+            val layoutInflater =  LayoutInflater.from(parent.context)
+            val binding = ItemTrackViewBinding.inflate(layoutInflater, parent, false)
+            return TrackViewHolder(binding)
         }
     }
 
