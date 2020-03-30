@@ -39,7 +39,6 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     }
 
     fun fetchTracks(query: String?) {
-        convertToQueryForDb(query)
         _trackResult.value = repository.fetch(couroutineScope, convertToQueryForDb(query))
     }
 

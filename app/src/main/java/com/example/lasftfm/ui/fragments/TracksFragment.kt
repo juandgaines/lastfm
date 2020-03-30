@@ -1,5 +1,6 @@
 package com.example.lasftfm.ui.fragments
 
+import android.app.DownloadManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -56,7 +57,7 @@ class TracksFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val query= s.toString()
-                lastFmViewModel.updateQuery(query)
+                lastFmViewModel.queryLiveDataTracks=query
                 adapterTracks.submitList(null)
                 lastFmViewModel.fetchTracks(query)
             }

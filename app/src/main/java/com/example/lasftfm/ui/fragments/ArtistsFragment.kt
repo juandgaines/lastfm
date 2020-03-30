@@ -1,6 +1,8 @@
 package com.example.lasftfm.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -51,6 +53,31 @@ class ArtistsFragment : Fragment() {
         binding.artistList.apply {
             adapter = adapter
         }
+
+        binding.searchText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) = Unit
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query= s.toString()
+                lastFmViewModel.queryLiveDataArtists= query
+                adapterArtists.submitList(null)
+                lastFmViewModel.fetchArtists(query)
+            }
+
+        })
+        binding.searchText.setText(lastFmViewModel.queryLiveDataArtists)
+
+        lastFmViewModel.artists.observe(viewLifecycleOwner, Observer {
+            Log.d("Activity", "list: ${it?.size}")
+            adapterArtists.submitList(it)
+        })
+        lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
+            Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
+        })
+
         return binding.root
     }
 
@@ -62,13 +89,7 @@ class ArtistsFragment : Fragment() {
                 Toast.makeText(activity!!.applicationContext, "$it", Toast.LENGTH_SHORT).show()
             })
         binding.artistList.adapter = adapterArtists
-        lastFmViewModel.artists.observe(viewLifecycleOwner, Observer {
-            Log.d("Activity", "list: ${it?.size}")
-            adapterArtists.submitList(it)
-        })
-        lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
-            Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
-        })
+
     }
 
 }
