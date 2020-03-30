@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.ActivityMainBinding
 import com.example.lasftfm.db.LastFmDatabase
@@ -39,52 +41,7 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = LastFmViewModelFactory(repo)
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
-        initAdapter()
-
-/*        databinding.trackList.apply {
-            adapter=adapterTracks
-        }
-        databinding.artistList.apply {
-            adapter=adapterArtists
-        }
-        lastFmViewModel.tracks.observe(this, Observer {
-            adapterTracks.submitList(it)
-        })
-        lastFmViewModel.artists.observe(this, Observer {
-            adapterArtists.submitList(it)
-        })*/
-
-    }
-
-
-    private fun initAdapter() {
-/*        //tracks
-        adapterTracks=
-            TrackAdapter(TrackListener {
-                Toast.makeText(this@MainActivity, "$it", Toast.LENGTH_SHORT).show()
-            })
-        databinding.trackList.adapter = adapterTracks
-        lastFmViewModel.tracks.observe(this, Observer{
-            Log.d("Activity", "list: ${it?.size}")
-            adapterTracks.submitList(it)
-        })
-        lastFmViewModel.networkErrors.observe(this, Observer<String> {
-            Toast.makeText(this, "Error: $it", Toast.LENGTH_LONG).show()
-        })
-
-        //artists
-
-        adapterArtists=
-            ArtistsAdapter(ArtistListener {
-                Toast.makeText(this@MainActivity, "$it", Toast.LENGTH_SHORT).show()
-            })
-        databinding.artistList.adapter = adapterTracks
-        lastFmViewModel.artists.observe(this, Observer{
-            Log.d("Activity", "list: ${it?.size}")
-            adapterArtists.submitList(it)
-        })
-        lastFmViewModel.networkErrorsArtist.observe(this, Observer<String> {
-            Toast.makeText(this, "Error: $it", Toast.LENGTH_LONG).show()
-        })*/
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        databinding.toolbar.setupWithNavController(navController,appBarConfiguration)
     }
 }
