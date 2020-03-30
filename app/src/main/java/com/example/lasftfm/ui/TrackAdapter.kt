@@ -2,16 +2,16 @@ package com.example.lasftfm.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lasftfm.databinding.ItemTrackViewBinding
 import com.example.lasftfm.network.Track
 
 class TrackAdapter(val trackListener: TrackListener) :
-    ListAdapter<Track, TrackViewHolder>(TracksDiffCallback()) {
+    PagedListAdapter<Track, TrackViewHolder>(TracksDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         return TrackViewHolder.from(parent)
@@ -27,13 +27,15 @@ class TrackViewHolder private constructor(val binding: ItemTrackViewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
-        item: Track,
+        item: Track?,
         trackListener: TrackListener
     ) {
         val context = binding.containerTrackItem.context
         binding.track = item
         binding.listener=trackListener
-        Glide.with(context).load(item.image.last().text).centerCrop().into(binding.trackPick)
+        item?.let {
+            Glide.with(context).load(it.image.last().text).centerCrop().into(binding.trackPick)
+        }
         binding.executePendingBindings()
     }
 

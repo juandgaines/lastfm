@@ -1,33 +1,27 @@
 package com.example.lasftfm.ui
 
-import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.lasftfm.db.LastFmDao
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.Network
+import androidx.paging.PagedList
 import com.example.lasftfm.network.Track
 import com.example.lasftfm.repository.LastFmRepo
+import com.example.lasftfm.repository.TrackResults
 import kotlinx.coroutines.*
 
-class ListLastFmViewModel(application: Application) :
-    AndroidViewModel(application) {
-
-
-    private val database=LastFmDatabase.getInstance(application)
-    private val lastFmRepo=LastFmRepo(database)
+class ListLastFmViewModel(private val repository: LastFmRepo) :
+    ViewModel() {
 
     private var viewModelJob = Job()
     private val couroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
-    val tracks=lastFmRepo.tracks
+    private val _trackResult = MutableLiveData<TrackResults>()
+    val tracks: LiveData<PagedList<Track>> =
+        Transformations.switchMap(_trackResult) { it -> it.data }
+    val networkErrors: LiveData<String> =
+        Transformations.switchMap(_trackResult) { it ->
+        it.networkErrors
+    }
 
     init {
-
-        couroutineScope.launch {
-            lastFmRepo.refreshVideos()
-        }
-
+        _trackResult.value = repository.fetch(couroutineScope)
     }
 
     override fun onCleared() {
@@ -37,12 +31,12 @@ class ListLastFmViewModel(application: Application) :
 }
 
 class LastFmViewModelFactory(
-    private val application: Application
+    private val repository: LastFmRepo
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListLastFmViewModel::class.java)) {
-            return ListLastFmViewModel(application) as T
+            return ListLastFmViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
