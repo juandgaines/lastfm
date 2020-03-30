@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_tracks" >
         <action
             android:id="@+id/action_tracksFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/selectionFragment"
@@ -35,7 +36,8 @@
         tools:layout="@layout/fragment_artists">
         <action
             android:id="@+id/action_artistsFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
