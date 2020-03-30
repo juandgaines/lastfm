@@ -1,6 +1,8 @@
 package com.example.lasftfm.network
 
+import android.util.Log
 import com.example.lasftfm.BuildConfig
+import com.example.lasftfm.repository.LastFmRepo
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -12,20 +14,34 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.logging.Level
 
+suspend fun searchTracks(
+    service: LastFmService,
+    page: Int,
+    onSuccess: (tracks: List<Track>) -> Unit,
+    onError: (error: String) -> Unit
+) {
+    try {
+        val playList = service.getTracksList("spain", page).tracks
+        onSuccess(playList.track)
+    } catch (e: Throwable) {
+        onError(e.message.toString())
+        Log.e(LastFmRepo::class.java.simpleName, "${e.message}")
+    }
+}
 
 interface LastFmService {
     @GET("2.0/?method=geo.gettoptracks&format=json")
     suspend fun getTracksList(
         @Query("country") country: String,
         @Query("page") page: Int,
-        @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
+        @Query("api_key") apiKey: String = BuildConfig.LASTFM_KEY
     ): ResponseTrack
 
     @GET("2.0/?method=geo.gettopartists&format=json")
     suspend fun getArtistList(
         @Query("country") country: String,
         @Query("page") page: Int,
-        @Query("api_key") apiKey: String=BuildConfig.LASTFM_KEY
+        @Query("api_key") apiKey: String = BuildConfig.LASTFM_KEY
     ): ResponseTrack
 
 }
@@ -35,6 +51,7 @@ object Network {
     private val client = OkHttpClient.Builder()
         .addInterceptor(logger)
         .build()
+
     init {
         logger.level = HttpLoggingInterceptor.Level.BASIC
     }
