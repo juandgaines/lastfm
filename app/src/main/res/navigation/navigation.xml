@@ -21,10 +21,12 @@
         android:label="Categories" >
         <action
             android:id="@+id/action_selectionFragment_to_tracksFragment"
-            app:destination="@id/tracksFragment" />
+            app:destination="@id/tracksFragment"
+            app:enterAnim="@anim/fade_in" />
         <action
             android:id="@+id/action_selectionFragment_to_artistsFragment"
-            app:destination="@id/artistsFragment" />
+            app:destination="@id/artistsFragment"
+            app:enterAnim="@anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/artistsFragment"
