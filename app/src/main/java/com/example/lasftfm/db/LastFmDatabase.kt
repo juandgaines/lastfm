@@ -9,7 +9,7 @@ import com.example.lasftfm.network.Artist2
 import com.example.lasftfm.network.Track
 
 @Database(
-    entities = [Track::class,Artist2::class],
+    entities = [Track::class, Artist2::class],
     version = 1,
     exportSchema = false
 )

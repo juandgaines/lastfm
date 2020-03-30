@@ -64,7 +64,7 @@ data class ResponseArtist(
 data class Topartists(
     @Json(name = "@attr")
     val attr: Attr,
-    val artist: List<Artist>
+    val artist: List<Artist2>
 )
 @Entity(tableName = "artists")
 data class Artist2(

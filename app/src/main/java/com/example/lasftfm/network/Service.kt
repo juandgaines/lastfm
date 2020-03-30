@@ -29,6 +29,21 @@ suspend fun searchTracks(
     }
 }
 
+suspend fun searchArtists(
+    service: LastFmService,
+    page: Int,
+    onSuccess: (artists: List<Artist2>) -> Unit,
+    onError: (error: String) -> Unit
+) {
+    try {
+        val playList = service.getArtistList("spain", page).topartists
+        onSuccess(playList.artist)
+    } catch (e: Throwable) {
+        onError(e.message.toString())
+        Log.e(LastFmRepo::class.java.simpleName, "${e.message}")
+    }
+}
+
 interface LastFmService {
     @GET("2.0/?method=geo.gettoptracks&format=json")
     suspend fun getTracksList(

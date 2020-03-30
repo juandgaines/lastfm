@@ -25,10 +25,17 @@ class LastFmRepo(
 
     }
 
-    private suspend fun insert(tracks: List<Track>) {
-        return withContext(Dispatchers.IO) {
-            database.lastFmDao().insert(tracks)
-        }
+    fun fetchArtist(couroutineScope: CoroutineScope):ArtistsResults{
+
+        val dataSourceFactory=database.lastFmDao().listOfArtist()
+        val boundaryCallback=ArtistBoundaryCallback(service,database,couroutineScope)
+        val networkErrors=boundaryCallback.networkErrors
+        val data=LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE)
+            .setBoundaryCallback(boundaryCallback)
+            .build()
+
+        return ArtistsResults(data,networkErrors)
+
     }
 
     companion object {
