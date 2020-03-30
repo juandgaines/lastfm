@@ -36,7 +36,6 @@ class TracksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
         val dataSource = LastFmDatabase.getInstance(activity!!.application)
         val repo = LastFmRepo(Network.lastFm, dataSource)
         val viewModelFactory = LastFmViewModelFactory(repo)
@@ -73,6 +72,7 @@ class TracksFragment : Fragment() {
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
             Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
         })
+        lastFmViewModel.setTrackSelected(null)
 
         return binding.root
     }

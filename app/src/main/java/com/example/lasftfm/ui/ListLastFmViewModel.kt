@@ -67,11 +67,11 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
         viewModelJob.cancel()
     }
 
-    fun setTrackSelected(track:Track){
+    fun setTrackSelected(track:Track?){
         _selectedTrackLiveData.value=track
 
     }
-    fun setArtistSelected(artist:Artist2){
+    fun setArtistSelected(artist:Artist2?){
         _selectedArtistLiveData.value=artist
     }
 

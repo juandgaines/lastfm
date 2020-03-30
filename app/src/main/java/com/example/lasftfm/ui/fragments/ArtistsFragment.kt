@@ -39,7 +39,6 @@ class ArtistsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         val dataSource = LastFmDatabase.getInstance(activity!!.application)
         val repo = LastFmRepo(Network.lastFm, dataSource)
@@ -78,13 +77,13 @@ class ArtistsFragment : Fragment() {
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
             Toast.makeText(activity!!.applicationContext, "Error: $it", Toast.LENGTH_LONG).show()
         })
+        lastFmViewModel.setArtistSelected(null)
 
         return binding.root
     }
 
 
     private fun initAdapter() {
-        //tracks
         adapterArtists =
             ArtistsAdapter(ArtistListener {
                 lastFmViewModel.setArtistSelected(it)
