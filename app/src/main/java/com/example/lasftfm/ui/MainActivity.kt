@@ -2,6 +2,7 @@ package com.example.lasftfm.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -37,7 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
-        adapterTracks= TrackAdapter()
+        adapterTracks= TrackAdapter(TrackListener {
+            Toast.makeText(this@MainActivity, "$it",Toast.LENGTH_SHORT).show()
+        })
         databinding.trackList.apply {
             adapter=adapterTracks
         }

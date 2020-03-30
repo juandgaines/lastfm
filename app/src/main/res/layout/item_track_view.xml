@@ -7,6 +7,9 @@
         <variable
             name="track"
             type="com.example.lasftfm.network.Track" />
+        <variable
+            name="listener"
+            type="com.example.lasftfm.ui.TrackListener" />
 
     </data>
 
@@ -14,6 +17,7 @@
         android:id="@+id/container_track_item"
         android:layout_width="wrap_content"
         android:layout_margin="16dp"
+        android:onClick="@{()->listener.onClick(track)}"
         android:layout_height="wrap_content">
 
         <ImageView
