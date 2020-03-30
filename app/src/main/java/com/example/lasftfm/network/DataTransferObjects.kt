@@ -66,12 +66,19 @@ data class Topartists(
     val attr: Attr,
     val artist: List<Artist>
 )
-
+@Entity(tableName = "artists")
 data class Artist2(
-    val image: List<Image>,
-    val listeners: String,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val mbid: String,
+    @ColumnInfo(name = "image")
+    val image: List<Image>,
+    @ColumnInfo(name = "listeners")
+    val listeners: String,
+    @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "streamable")
     val streamable: String,
+    @ColumnInfo(name = "url")
     val url: String
 )

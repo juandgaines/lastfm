@@ -3,6 +3,7 @@ package com.example.lasftfm.db
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
+import com.example.lasftfm.network.Artist2
 import com.example.lasftfm.network.Track
 
 @Dao
@@ -16,6 +17,15 @@ interface LastFmDao {
 
     @Query("DELETE FROM tracks")
     fun clearTracks()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertArtist(posts: List<Artist2>)
+
+    @Query("SELECT * FROM artists ORDER BY id ASC")
+    fun listOfArtist():DataSource.Factory<Int, Artist2>
+
+    @Query("DELETE FROM artists")
+    fun clearArtist()
 
 
 }
