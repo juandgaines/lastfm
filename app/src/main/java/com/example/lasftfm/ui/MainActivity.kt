@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var lastFmViewModel: ListLastFmViewModel
     private lateinit var databinding:ActivityMainBinding
+    private lateinit var adapterTracks: TrackAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
-
+        adapterTracks= TrackAdapter()
+        databinding.trackList.apply {
+            adapter=adapterTracks
+        }
         lastFmViewModel.tracks.observe(this, Observer {
-            databinding.trackList.apply {
-                adapter=TrackAdapter(it)
-            }
+            adapterTracks.submitList(it)
         })
 
     }
