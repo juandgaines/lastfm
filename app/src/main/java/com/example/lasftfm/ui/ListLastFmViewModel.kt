@@ -16,8 +16,11 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     private val couroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
     private val _trackResult = MutableLiveData<TrackResults>()
     private val _artistResult = MutableLiveData<ArtistsResults>()
-    var queryLiveDataTracks=""
+    var queryLiveDataTracks = ""
     var queryLiveDataArtists = ""
+    private var _selectedTrackLiveData = MutableLiveData<Track>()
+    private var _selectedArtistLiveData = MutableLiveData<Artist2>()
+
 
     val tracks: LiveData<PagedList<Track>> =
         Transformations.switchMap(_trackResult) { it -> it.data }
@@ -33,6 +36,11 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
             it.networkErrors
         }
 
+    val selectedTrackLiveData: LiveData<Track>
+        get() = _selectedTrackLiveData
+    val selectedArtistLiveData: LiveData<Artist2>
+        get() = _selectedArtistLiveData
+
     init {
         fetchTracks("%")
         fetchArtists("%")
@@ -42,7 +50,7 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
         _trackResult.value = repository.fetch(couroutineScope, convertToQueryForDb(query))
     }
 
-    private fun convertToQueryForDb(query: String?) :String{
+    private fun convertToQueryForDb(query: String?): String {
         return if (query == null) {
             "%"
         } else {
@@ -59,9 +67,14 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
         viewModelJob.cancel()
     }
 
-    fun updateQuery(query: String) {
-        queryLiveDataTracks=query
+    fun setTrackSelected(track:Track){
+        _selectedTrackLiveData.value=track
+
     }
+    fun setArtistSelected(artist:Artist2){
+        _selectedArtistLiveData.value=artist
+    }
+
 }
 
 class LastFmViewModelFactory(

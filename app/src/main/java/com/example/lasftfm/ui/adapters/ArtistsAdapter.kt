@@ -63,6 +63,6 @@ class ArtistsDiffCallback : DiffUtil.ItemCallback<Artist2>() {
 
 }
 
-class ArtistListener(val clickListener: (trackId: String) -> Unit) {
-    fun onClick(artist: Artist2) = clickListener(artist.mbid)
+class ArtistListener(val clickListener: (artist: Artist2) -> Unit) {
+    fun onClick(artist: Artist2) = clickListener(artist)
 }

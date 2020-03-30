@@ -11,6 +11,7 @@ buildscript {
     ext.pagingVersion='2.1.2'
     ext.okhttpLoggingInterceptorVersion='4.2.2'
     ext.glide_version='4.11.0'
+    ext.version_navigation='2.2.1'
 
     repositories {
         google()
@@ -20,6 +21,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

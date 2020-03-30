@@ -64,6 +64,6 @@ class TracksDiffCallback : DiffUtil.ItemCallback<Track>() {
 
 }
 
-class TrackListener(val clickListener: (trackId: String) -> Unit) {
-    fun onClick(track: Track) = clickListener(track.mbid)
+class TrackListener(val clickListener: (trackId: Track) -> Unit) {
+    fun onClick(track: Track) = clickListener(track)
 }

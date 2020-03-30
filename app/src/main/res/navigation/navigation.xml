@@ -9,7 +9,11 @@
         android:id="@+id/tracksFragment"
         android:name="com.example.lasftfm.ui.fragments.TracksFragment"
         android:label="TracksFragment"
-        tools:layout="@layout/fragment_tracks" />
+        tools:layout="@layout/fragment_tracks" >
+        <action
+            android:id="@+id/action_tracksFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/selectionFragment"
         android:name="com.example.lasftfm.ui.fragments.SelectionFragment"
@@ -26,5 +30,14 @@
         android:id="@+id/artistsFragment"
         android:name="com.example.lasftfm.ui.fragments.ArtistsFragment"
         android:label="ArtistsFragment"
-        tools:layout="@layout/fragment_artists"/>
+        tools:layout="@layout/fragment_artists">
+        <action
+            android:id="@+id/action_artistsFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.lasftfm.ui.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>

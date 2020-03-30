@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentTracksBinding
@@ -81,7 +82,8 @@ class TracksFragment : Fragment() {
         //tracks
         adapterTracks =
             TrackAdapter(TrackListener {
-                Toast.makeText(activity!!.applicationContext, "$it", Toast.LENGTH_SHORT).show()
+                lastFmViewModel.setTrackSelected(it)
+                activity?.findNavController(R.id.myNavHostFragment)?.navigate(R.id.action_tracksFragment_to_detailFragment)
             })
         binding.trackList.adapter = adapterTracks
 

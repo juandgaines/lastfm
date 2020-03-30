@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentArtistsBinding
@@ -86,7 +87,8 @@ class ArtistsFragment : Fragment() {
         //tracks
         adapterArtists =
             ArtistsAdapter(ArtistListener {
-                Toast.makeText(activity!!.applicationContext, "$it", Toast.LENGTH_SHORT).show()
+                lastFmViewModel.setArtistSelected(it)
+                activity?.findNavController(R.id.myNavHostFragment)?.navigate(R.id.action_artistsFragment_to_detailFragment)
             })
         binding.artistList.adapter = adapterArtists
 
