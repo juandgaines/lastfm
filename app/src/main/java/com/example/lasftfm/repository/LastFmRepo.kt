@@ -3,18 +3,15 @@ package com.example.lasftfm.repository
 import androidx.paging.LivePagedListBuilder
 import com.example.lasftfm.db.LastFmDatabase
 import com.example.lasftfm.network.LastFmService
-import com.example.lasftfm.network.Track
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class LastFmRepo(
     private val service: LastFmService,
     private val database: LastFmDatabase) {
 
-    fun fetch(couroutineScope: CoroutineScope):TrackResults{
+    fun fetch(couroutineScope: CoroutineScope, query: String):TrackResults{
 
-        val dataSourceFactory=database.lastFmDao().listOfTracks()
+        val dataSourceFactory=database.lastFmDao().listOfTracks(query = query)
         val boundaryCallback=TrackBoundaryCallback(service,database,couroutineScope)
         val networkErrors=boundaryCallback.networkErrors
         val data=LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE)
@@ -25,9 +22,9 @@ class LastFmRepo(
 
     }
 
-    fun fetchArtist(couroutineScope: CoroutineScope):ArtistsResults{
+    fun fetchArtist(couroutineScope: CoroutineScope, query: String):ArtistsResults{
 
-        val dataSourceFactory=database.lastFmDao().listOfArtist()
+        val dataSourceFactory=database.lastFmDao().listOfArtist(query = query)
         val boundaryCallback=ArtistBoundaryCallback(service,database,couroutineScope)
         val networkErrors=boundaryCallback.networkErrors
         val data=LivePagedListBuilder(dataSourceFactory,DATABASE_PAGE_SIZE)

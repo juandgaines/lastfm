@@ -16,13 +16,15 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
     private val couroutineScope = CoroutineScope(viewModelJob + Dispatchers.IO)
     private val _trackResult = MutableLiveData<TrackResults>()
     private val _artistResult = MutableLiveData<ArtistsResults>()
+    private val _queryLiveDataTracks = MutableLiveData<String>()
+    private val _queryLiveDataArtists = MutableLiveData<String>()
 
     val tracks: LiveData<PagedList<Track>> =
         Transformations.switchMap(_trackResult) { it -> it.data }
     val networkErrors: LiveData<String> =
         Transformations.switchMap(_trackResult) { it ->
-        it.networkErrors
-    }
+            it.networkErrors
+        }
 
     val artists: LiveData<PagedList<Artist2>> =
         Transformations.switchMap(_artistResult) { it -> it.data }
@@ -30,15 +32,45 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
         Transformations.switchMap(_artistResult) { it ->
             it.networkErrors
         }
+    val queryLiveDataTracks: LiveData<String>
+        get() = Transformations.map(_queryLiveDataTracks) {
+            if(it==null){
+                "%"
+            }
+            else{
+                "%${it}%"
+            }
+        }
+    val queryLiveDataArtist: LiveData<String>
+        get() = Transformations.map(_queryLiveDataArtists) {
+            if(it==null){
+                "%"
+            }
+            else{
+                "%${it}%"
+            }
+        }
 
     init {
-        _trackResult.value = repository.fetch(couroutineScope)
-        _artistResult.value=repository.fetchArtist(couroutineScope)
+        fetchTracks("%")
+        fetchArtists("%")
+    }
+
+    fun fetchTracks(query: String?) {
+        _trackResult.value = repository.fetch(couroutineScope, query ?: "%")
+    }
+
+    fun fetchArtists(query: String?) {
+        _artistResult.value = repository.fetchArtist(couroutineScope, query ?: "%")
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun updateQuery(query: String) {
+        _queryLiveDataTracks.value=query
     }
 }
 

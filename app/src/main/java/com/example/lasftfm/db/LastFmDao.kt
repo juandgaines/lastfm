@@ -13,7 +13,7 @@ interface LastFmDao {
     fun insert(posts: List<Track>)
 
     @Query("SELECT * FROM tracks  WHERE (name LIKE :query) ORDER BY name ASC")
-    fun listOfTracks(query:String="%"):DataSource.Factory<Int, Track>
+    fun listOfTracks(query:String):DataSource.Factory<Int, Track>
 
     @Query("DELETE FROM tracks")
     fun clearTracks()
@@ -22,7 +22,7 @@ interface LastFmDao {
     fun insertArtist(posts: List<Artist2>)
 
     @Query("SELECT * FROM artists WHERE (name LIKE :query) ORDER BY name ASC")
-    fun listOfArtist(query:String="%"):DataSource.Factory<Int, Artist2>
+    fun listOfArtist(query:String):DataSource.Factory<Int, Artist2>
 
     @Query("DELETE FROM artists")
     fun clearArtist()
