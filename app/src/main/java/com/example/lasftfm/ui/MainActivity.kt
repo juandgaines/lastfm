@@ -36,9 +36,8 @@ class MainActivity : AppCompatActivity() {
         val application = application
         databinding=DataBindingUtil.setContentView(this,R.layout.activity_main)
         navController = findNavController(R.id.myNavHostFragment)
-        val dataSource = LastFmDatabase.getInstance(application)
-        val repo= LastFmRepo(Network.lastFm,dataSource)
-        val viewModelFactory = LastFmViewModelFactory(repo)
+
+        val viewModelFactory = LastFmViewModelFactory(application)
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
         val appBarConfiguration = AppBarConfiguration(navController.graph)

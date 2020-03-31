@@ -11,6 +11,7 @@ import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 class DataConverter {
+
     @TypeConverter
     fun stringToTracksImagesList(images: String): List<Image> {
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()

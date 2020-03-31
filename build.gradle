@@ -12,6 +12,7 @@ buildscript {
     ext.okhttpLoggingInterceptorVersion='4.2.2'
     ext.glide_version='4.11.0'
     ext.version_navigation='2.2.1'
+    ext.hamcrestVersion='2.2'
 
     repositories {
         google()
