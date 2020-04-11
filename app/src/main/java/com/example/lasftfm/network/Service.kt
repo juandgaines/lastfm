@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import timber.log.Timber
 import java.util.logging.Level
 
 suspend fun searchTracks(
@@ -25,7 +26,7 @@ suspend fun searchTracks(
         onSuccess(playList.track)
     } catch (e: Throwable) {
         onError(e.message.toString())
-        Log.e(LastFmRepo::class.java.simpleName, "${e.message}")
+        Timber.tag(LastFmRepo::class.java.simpleName).e( "${e}")
     }
 }
 
@@ -40,7 +41,7 @@ suspend fun searchArtists(
         onSuccess(playList.artist)
     } catch (e: Throwable) {
         onError(e.message.toString())
-        Log.e(LastFmRepo::class.java.simpleName, "${e.message}")
+        Timber.tag(LastFmRepo::class.java.simpleName).e( "${e}")
     }
 }
 

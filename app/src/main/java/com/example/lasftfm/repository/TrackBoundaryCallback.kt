@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class TrackBoundaryCallback(
     private val service: LastFmService,
@@ -28,14 +29,14 @@ class TrackBoundaryCallback(
     private var isRequestInProgress = false
 
     override fun onZeroItemsLoaded() {
-        Log.d("RepoBoundaryCallback", "onZeroItemsLoaded")
+       Timber.tag("RepoBoundaryCallback").d("onZeroItemsLoaded")
         coroutineScope.launch {
             requestAndSaveData()
         }
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: Track) {
-        Log.d("RepoBoundaryCallback", "onItemAtEndLoaded")
+        Timber.tag("RepoBoundaryCallback").d("onItemAtEndLoaded")
         coroutineScope.launch {
             requestAndSaveData()
         }

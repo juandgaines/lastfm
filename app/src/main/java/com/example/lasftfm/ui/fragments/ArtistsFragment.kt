@@ -26,6 +26,7 @@ import com.example.lasftfm.ui.adapters.ArtistListener
 import com.example.lasftfm.ui.adapters.ArtistsAdapter
 import com.example.lasftfm.ui.adapters.TrackAdapter
 import com.example.lasftfm.ui.adapters.TrackListener
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -69,7 +70,7 @@ class ArtistsFragment : Fragment() {
         binding.searchText.setText(lastFmViewModel.queryLiveDataArtists)
 
         lastFmViewModel.artists.observe(viewLifecycleOwner, Observer {
-            Log.d("Activity", "list: ${it?.size}")
+            Timber.tag(ArtistsFragment::class.java.simpleName).d( "list: ${it?.size}")
             adapterArtists.submitList(it)
         })
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {

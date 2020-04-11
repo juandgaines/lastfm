@@ -24,6 +24,7 @@ import com.example.lasftfm.ui.LastFmViewModelFactory
 import com.example.lasftfm.ui.ListLastFmViewModel
 import com.example.lasftfm.ui.adapters.TrackAdapter
 import com.example.lasftfm.ui.adapters.TrackListener
+import timber.log.Timber
 
 
 class TracksFragment : Fragment() {
@@ -64,7 +65,7 @@ class TracksFragment : Fragment() {
         binding.searchText.setText(lastFmViewModel.queryLiveDataTracks)
 
         lastFmViewModel.tracks.observe(viewLifecycleOwner, Observer {
-            Log.d("Activity", "list: ${it?.size}")
+            Timber.tag(TracksFragment::class.java.simpleName).d( "list: ${it?.size}")
             adapterTracks.submitList(it)
         })
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {

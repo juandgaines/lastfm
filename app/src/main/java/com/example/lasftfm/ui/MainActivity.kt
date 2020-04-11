@@ -1,25 +1,18 @@
 package com.example.lasftfm.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.crashlytics.android.Crashlytics
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.ActivityMainBinding
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.Network
-import com.example.lasftfm.repository.LastFmRepo
-import com.example.lasftfm.ui.adapters.ArtistListener
 import com.example.lasftfm.ui.adapters.ArtistsAdapter
 import com.example.lasftfm.ui.adapters.TrackAdapter
-import com.example.lasftfm.ui.adapters.TrackListener
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,5 +35,6 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         databinding.toolbar.setupWithNavController(navController,appBarConfiguration)
+
     }
 }
