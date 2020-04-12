@@ -11,6 +11,14 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Juan\\Documents\\keystorefiles\\lastfm-keystore.jks')
+            storePassword 'prueba1234'
+            keyPassword 'prueba12345'
+            keyAlias = 'lastfm-key1'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
@@ -30,10 +38,13 @@ android {
     buildTypes {
 
         debug{
+            debuggable true
             buildConfigField("String", "LASTFM_KEY", apikeyProperties['LASTFM_KEY_FROM_FILE'])
         }
         release {
             minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "LASTFM_KEY", apikeyProperties['LASTFM_KEY_FROM_FILE'])
         }

@@ -26,7 +26,7 @@ suspend fun searchTracks(
         onSuccess(playList.track)
     } catch (e: Throwable) {
         onError(e.message.toString())
-        Timber.tag(LastFmRepo::class.java.simpleName).e( "${e}")
+        Timber.tag(LastFmRepo::class.java.simpleName).e( "$e")
     }
 }
 
@@ -41,7 +41,7 @@ suspend fun searchArtists(
         onSuccess(playList.artist)
     } catch (e: Throwable) {
         onError(e.message.toString())
-        Timber.tag(LastFmRepo::class.java.simpleName).e( "${e}")
+        Timber.tag(LastFmRepo::class.java.simpleName).e( "$e")
     }
 }
 
