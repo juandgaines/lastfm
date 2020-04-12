@@ -43,7 +43,6 @@ android {
         }
         release {
             minifyEnabled false
-            debuggable true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "LASTFM_KEY", apikeyProperties['LASTFM_KEY_FROM_FILE'])
