@@ -62,7 +62,6 @@ class LastFmDatabaseTest {
     @Before
     fun createDb() {
 
-        val converter=DataConverter()
         track= Track("009f7e7b-5ecf-4cef-a2c1-0f0c736e807e","Everlong","323","1368885","https://www.last.fm/music/Foo+Fighters/_/Everlong",
             listOf(Image("https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png","small"),
                 Image("https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png","medium"),
@@ -87,6 +86,15 @@ class LastFmDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetTracks() {
+        lastFmDao.insert(listOf(track))
+        val factory = lastFmDao.listOfTracks("%")
+        val extractedList = (factory.create() as LimitOffsetDataSource).loadRange(0, 10).first()
+        assertEquals(true, track.mbid==extractedList.mbid)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun insertAndGetArtist() {
         lastFmDao.insert(listOf(track))
         val factory = lastFmDao.listOfTracks("%")
         val extractedList = (factory.create() as LimitOffsetDataSource).loadRange(0, 10).first()

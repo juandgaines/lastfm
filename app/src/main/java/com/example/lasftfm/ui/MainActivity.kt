@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.crashlytics.android.Crashlytics
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.ActivityMainBinding
+import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.ui.adapters.ArtistsAdapter
 import com.example.lasftfm.ui.adapters.TrackAdapter
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         databinding=DataBindingUtil.setContentView(this,R.layout.activity_main)
         navController = findNavController(R.id.myNavHostFragment)
 
-        val viewModelFactory = LastFmViewModelFactory(application)
+        val viewModelFactory = LastFmViewModelFactory(LastFmRepo.getRepository(application))
         lastFmViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListLastFmViewModel::class.java)
         val appBarConfiguration = AppBarConfiguration(navController.graph)

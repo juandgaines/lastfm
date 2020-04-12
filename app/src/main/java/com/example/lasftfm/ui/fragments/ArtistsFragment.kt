@@ -41,7 +41,7 @@ class ArtistsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val viewModelFactory = LastFmViewModelFactory(activity!!.application)
+        val viewModelFactory = LastFmViewModelFactory(LastFmRepo.getRepository(requireActivity().application))
         lastFmViewModel =
             ViewModelProvider(activity!!, viewModelFactory).get(ListLastFmViewModel::class.java)
         binding =

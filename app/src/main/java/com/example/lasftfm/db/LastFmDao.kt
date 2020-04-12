@@ -10,22 +10,22 @@ import com.example.lasftfm.network.Track
 interface LastFmDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(posts: List<Track>)
+    suspend fun insert(posts: List<Track>)
 
     @Query("SELECT * FROM tracks  WHERE (name LIKE :query) ORDER BY name ASC")
     fun listOfTracks(query:String):DataSource.Factory<Int, Track>
 
     @Query("DELETE FROM tracks")
-    fun clearTracks()
+    suspend fun clearTracks()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertArtist(posts: List<Artist2>)
+    suspend fun insertArtist(posts: List<Artist2>)
 
     @Query("SELECT * FROM artists WHERE (name LIKE :query) ORDER BY name ASC")
     fun listOfArtist(query:String):DataSource.Factory<Int, Artist2>
 
     @Query("DELETE FROM artists")
-    fun clearArtist()
+    suspend fun clearArtist()
 
 
 }

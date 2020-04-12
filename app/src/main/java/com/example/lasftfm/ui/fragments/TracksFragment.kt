@@ -37,7 +37,7 @@ class TracksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val viewModelFactory = LastFmViewModelFactory(activity!!.application)
+        val viewModelFactory = LastFmViewModelFactory(LastFmRepo.getRepository(requireActivity().application))
         lastFmViewModel =
             ViewModelProvider(activity!!, viewModelFactory).get(ListLastFmViewModel::class.java)
         binding =

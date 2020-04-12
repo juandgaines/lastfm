@@ -1,20 +1,16 @@
 package com.example.lasftfm.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.*
+import com.example.lasftfm.network.Artist2
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ArtistBoundaryCallback(
-    private val service: LastFmService,
-    private val cache: LastFmDatabase,
+    private val service: LastFmDataSource,
+    private val cache: LastFmDataSource,
     private val coroutineScope: CoroutineScope
 ) : PagedList.BoundaryCallback<Artist2>() {
 
@@ -43,10 +39,10 @@ class ArtistBoundaryCallback(
     private suspend fun requestAndSaveData() {
         if (isRequestInProgress) return
         isRequestInProgress = true
-       searchArtists(service,
+       service.searchArtistsByQuery(
             lastRequestedPage,
             { repos ->
-                cache.lastFmDao().insertArtist(repos)
+                cache.insertArtist(repos)
                 lastRequestedPage++
                 isRequestInProgress = false
 

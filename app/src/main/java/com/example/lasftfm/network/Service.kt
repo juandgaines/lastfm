@@ -1,8 +1,11 @@
 package com.example.lasftfm.network
 
+import androidx.paging.DataSource
+import com.example.lasftfm.repository.LastFmDataSource
 import com.example.lasftfm.repository.LastFmRepo
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.CoroutineScope
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 
 
-class Network {
+class Network : LastFmDataSource {
 
     private var logger: HttpLoggingInterceptor = HttpLoggingInterceptor()
     private var client: OkHttpClient
@@ -29,21 +32,18 @@ class Network {
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-
-
     }
 
     val lastFm = retrofit.create(LastFmService::class.java)
 
 
     suspend fun searchTracks(
-        service: LastFmService,
         page: Int,
         onSuccess: (tracks: List<Track>) -> Unit,
         onError: (error: String) -> Unit
     ) {
         try {
-            val playList = service.getTracksList("spain", page).tracks
+            val playList = lastFm.getTracksList("spain", page).tracks
             onSuccess(playList.track)
         } catch (e: Throwable) {
             onError(e.message.toString())
@@ -52,19 +52,47 @@ class Network {
     }
 
     suspend fun searchArtists(
-        service: LastFmService,
         page: Int,
         onSuccess: (artists: List<Artist2>) -> Unit,
         onError: (error: String) -> Unit
     ) {
         try {
-            val playList = service.getArtistList("spain", page).topartists
+            val playList = lastFm.getArtistList("spain", page).topartists
             onSuccess(playList.artist)
         } catch (e: Throwable) {
             onError(e.message.toString())
             Timber.tag(LastFmRepo::class.java.simpleName).e("$e")
         }
     }
+
+    override fun insertTracks(posts: List<Track>) = Unit
+
+    override fun getAllTracks(query: String): DataSource.Factory<Int, Track>? = null
+
+    override fun insertArtist(posts: List<Artist2>) = Unit
+
+    override fun getAllArtist(query: String): DataSource.Factory<Int, Artist2>? = null
+
+    override fun deleteAllArtists() = Unit
+
+    override fun deleteAllTracks() = Unit
+    override suspend fun searchArtistsByQuery(
+        page: Int,
+        onSuccess: (artists: List<Artist2>) -> Unit,
+        onError: (error: String) -> Unit
+    ) {
+        searchArtists(page, onSuccess, onError)
+    }
+
+    override suspend fun searchTrackByQuery(
+        page: Int,
+        onSuccess: (artists: List<Track>) -> Unit,
+        onError: (error: String) -> Unit
+    ) {
+        searchTracks(page, onSuccess, onError)
+    }
+
+    override fun setCoroutine(coroutineScope: CoroutineScope) = Unit
 
     companion object {
         @Volatile
@@ -73,11 +101,11 @@ class Network {
         fun getNetworkProvider(): Network {
 
             return INSTANCE ?: synchronized(this) {
-
                 Network()
             }
         }
 
     }
+
 }
 
