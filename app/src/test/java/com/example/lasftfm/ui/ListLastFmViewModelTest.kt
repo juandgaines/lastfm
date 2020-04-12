@@ -6,15 +6,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.lasftfm.getOrAwaitValue
-import com.example.lasftfm.network.Artist
-import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.Image
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Artist
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Image
+import com.example.lasftfm.repository.network.Track
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.concurrent.timerTask
 
 @RunWith(AndroidJUnit4::class)
 class ListLastFmViewModelTest {

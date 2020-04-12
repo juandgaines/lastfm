@@ -3,7 +3,7 @@ package com.example.lasftfm.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Track
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import timber.log.Timber

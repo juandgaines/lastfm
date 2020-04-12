@@ -1,11 +1,9 @@
-package com.example.lasftfm.db
+package com.example.lasftfm.repository.db
 
-import android.provider.MediaStore
 import androidx.room.TypeConverter
-import com.example.lasftfm.network.Artist
-import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.Image
-import com.squareup.moshi.JsonAdapter
+import com.example.lasftfm.repository.network.Artist
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Image
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

@@ -1,8 +1,8 @@
-package com.example.lasftfm.db
+package com.example.lasftfm.repository.db
 
-import com.example.lasftfm.network.Artist
-import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.Image
+import com.example.lasftfm.repository.network.Artist
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Image
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -3,7 +3,6 @@ package com.example.lasftfm.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,16 +15,11 @@ import androidx.navigation.findNavController
 
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentArtistsBinding
-import com.example.lasftfm.databinding.FragmentTracksBinding
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.Network
 import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.ui.LastFmViewModelFactory
 import com.example.lasftfm.ui.ListLastFmViewModel
 import com.example.lasftfm.ui.adapters.ArtistListener
 import com.example.lasftfm.ui.adapters.ArtistsAdapter
-import com.example.lasftfm.ui.adapters.TrackAdapter
-import com.example.lasftfm.ui.adapters.TrackListener
 import timber.log.Timber
 
 /**

@@ -1,9 +1,8 @@
-package com.example.lasftfm.db
+package com.example.lasftfm.repository.db
 
 import androidx.paging.DataSource
-import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.LastFmService
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Track
 import com.example.lasftfm.repository.LastFmDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

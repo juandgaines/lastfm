@@ -2,10 +2,9 @@ package com.example.lasftfm.repository
 
 import android.app.Application
 import androidx.paging.LivePagedListBuilder
-import com.example.lasftfm.db.LastFmCache
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.LastFmService
-import com.example.lasftfm.network.Network
+import com.example.lasftfm.repository.db.LastFmCache
+import com.example.lasftfm.repository.db.LastFmDatabase
+import com.example.lasftfm.repository.network.Network
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,7 +13,7 @@ class LastFmRepo(
     private val service: LastFmDataSource,
     private val database: LastFmDataSource
 
-) {
+) : RepoOperations {
 
     private var viewModelJob: Job = Job()
     private var couroutineScope=CoroutineScope(viewModelJob + Dispatchers.IO)
@@ -25,7 +24,7 @@ class LastFmRepo(
     }
 
 
-    fun fetch(query: String): TrackResults {
+    override fun fetch(query: String): TrackResults {
 
         val dataSourceFactory = database.getAllTracks(query = query)
         val boundaryCallback = TrackBoundaryCallback(service, database, couroutineScope)
@@ -38,7 +37,7 @@ class LastFmRepo(
 
     }
 
-    fun fetchArtist(query: String): ArtistsResults {
+    override fun fetchArtist(query: String): ArtistsResults {
 
         val dataSourceFactory = database.getAllArtist(query = query)
         val boundaryCallback = ArtistBoundaryCallback(service, database, couroutineScope)
@@ -51,7 +50,7 @@ class LastFmRepo(
 
     }
 
-    fun disposeJob() {
+    override fun disposeJob() {
         viewModelJob.cancel()
     }
 

@@ -1,13 +1,12 @@
-package com.example.lasftfm.db
+package com.example.lasftfm.repository.db
 
-import android.provider.ContactsContract
 import androidx.room.Room
 import androidx.room.paging.LimitOffsetDataSource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.lasftfm.network.Artist
-import com.example.lasftfm.network.Image
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Artist
+import com.example.lasftfm.repository.network.Image
+import com.example.lasftfm.repository.network.Track
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before

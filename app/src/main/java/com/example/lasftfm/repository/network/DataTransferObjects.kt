@@ -1,4 +1,4 @@
-package com.example.lasftfm.network
+package com.example.lasftfm.repository.network
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

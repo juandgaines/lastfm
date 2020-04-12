@@ -1,4 +1,4 @@
-package com.example.lasftfm.network
+package com.example.lasftfm.repository.network
 
 import androidx.paging.DataSource
 import com.example.lasftfm.repository.LastFmDataSource

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.lasftfm.databinding.ItemTrackViewBinding
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Track
 
 class TrackAdapter(val trackListener: TrackListener) :
     PagedListAdapter<Track, TrackViewHolder>(

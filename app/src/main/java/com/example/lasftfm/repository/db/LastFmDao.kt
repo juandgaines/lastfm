@@ -1,10 +1,9 @@
-package com.example.lasftfm.db
+package com.example.lasftfm.repository.db
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.*
-import com.example.lasftfm.network.Artist2
-import com.example.lasftfm.network.Track
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Track
 
 @Dao
 interface LastFmDao {

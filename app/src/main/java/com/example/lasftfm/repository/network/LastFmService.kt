@@ -1,4 +1,4 @@
-package com.example.lasftfm.network
+package com.example.lasftfm.repository.network
 
 import com.example.lasftfm.BuildConfig
 import retrofit2.http.GET
