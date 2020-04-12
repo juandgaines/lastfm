@@ -4,7 +4,7 @@ buildscript {
     ext.kotlin_version = '1.3.71'
     ext.version_retrofit='2.8.1'
     ext.version_moshi='1.9.2'
-    ext.version_kotlin_coroutines='1.3.2'
+    ext.version_kotlin_coroutines='1.3.5'
     ext.version_timber='4.7.1'
     ext.roomVersion='2.2.5'
     ext.archComponentsVersion='2.2.0'
@@ -15,6 +15,7 @@ buildscript {
     ext.hamcrestVersion='2.2'
     ext.firebaseAnalytics='17.3.0'
     ext.versionCrashLytics='2.10.1'
+    ext.coroutinesVersion = '1.3.4'
 
     repositories {
         google()

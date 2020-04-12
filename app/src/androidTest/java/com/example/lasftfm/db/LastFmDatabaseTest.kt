@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.example.lasftfm.network.Artist
 import com.example.lasftfm.network.Image
 import com.example.lasftfm.network.Track
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 
@@ -85,7 +86,7 @@ class LastFmDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetTracks() {
+    fun insertAndGetTracks() = runBlocking{
         lastFmDao.insert(listOf(track))
         val factory = lastFmDao.listOfTracks("%")
         val extractedList = (factory.create() as LimitOffsetDataSource).loadRange(0, 10).first()
@@ -94,7 +95,7 @@ class LastFmDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetArtist() {
+    fun insertAndGetArtist()= runBlocking {
         lastFmDao.insert(listOf(track))
         val factory = lastFmDao.listOfTracks("%")
         val extractedList = (factory.create() as LimitOffsetDataSource).loadRange(0, 10).first()

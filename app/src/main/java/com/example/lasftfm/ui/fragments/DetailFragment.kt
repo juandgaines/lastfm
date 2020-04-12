@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentDetailBinding
-import com.example.lasftfm.db.LastFmDatabase
-import com.example.lasftfm.network.Network
 import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.ui.LastFmViewModelFactory
 import com.example.lasftfm.ui.ListLastFmViewModel
