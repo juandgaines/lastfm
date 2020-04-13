@@ -6,7 +6,7 @@
     <data>
         <variable
             name="artist"
-            type="com.example.lasftfm.network.Artist2" />
+            type="com.example.lasftfm.repository.network.Artist2" />
         <variable
             name="listener"
             type="com.example.lasftfm.ui.adapters.ArtistListener" />

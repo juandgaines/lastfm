@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.lasftfm.databinding.ItemArtistViewBinding
 import com.example.lasftfm.repository.network.Artist2
 
+
 class ArtistsAdapter(val trackListener: ArtistListener) :
     PagedListAdapter<Artist2, ArtistsViewHolder>(
         ArtistsDiffCallback()

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="track"
-            type="com.example.lasftfm.network.Track" />
+            type="com.example.lasftfm.repository.network.Track" />
         <variable
             name="listener"
             type="com.example.lasftfm.ui.adapters.TrackListener" />

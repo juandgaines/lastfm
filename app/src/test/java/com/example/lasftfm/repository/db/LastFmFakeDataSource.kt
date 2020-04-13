@@ -41,7 +41,7 @@ class LastFmFakeDataSource( var listArtists:MutableList<Artist2>,
         onSuccess: (artists: List<Artist2>) -> Unit,
         onError: (error: String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        page
     }
 
     override suspend fun searchTrackByQuery(
@@ -49,7 +49,7 @@ class LastFmFakeDataSource( var listArtists:MutableList<Artist2>,
         onSuccess: (artists: List<Track>) -> Unit,
         onError: (error: String) -> Unit
     ) {
-        TODO("Not yet implemented")
+        page
     }
 
     override fun setCoroutine(scope: CoroutineScope) {
