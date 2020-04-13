@@ -7,9 +7,10 @@ import com.example.lasftfm.repository.network.Artist2
 import com.example.lasftfm.repository.network.Track
 import com.example.lasftfm.repository.ArtistsResults
 import com.example.lasftfm.repository.LastFmRepo
+import com.example.lasftfm.repository.RepoOperations
 import com.example.lasftfm.repository.TrackResults
 
-class ListLastFmViewModel(private val repository: LastFmRepo) :
+class ListLastFmViewModel(private val repository: RepoOperations) :
     ViewModel() {
 
     private val _trackResult = MutableLiveData<TrackResults>()
@@ -72,7 +73,7 @@ class ListLastFmViewModel(private val repository: LastFmRepo) :
 }
 
 class LastFmViewModelFactory(
-    private val repository: LastFmRepo
+    private val repository: RepoOperations
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

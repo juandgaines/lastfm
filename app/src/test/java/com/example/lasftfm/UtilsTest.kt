@@ -1,14 +1,15 @@
 package com.example.lasftfm
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class UtilsTest{
+class UtilsTest {
+
 
     @Test
-    fun getQueryString(){
-        assertEquals("%",Utils.convertToQuery(null))
-        assertEquals("%Blinding lights%",Utils.convertToQuery("Blinding lights"))
-        assertEquals("% %",Utils.convertToQuery(" "))
+    fun getQueryString() {
+        assertEquals("%", Utils.convertToQuery(null))
+        assertEquals("%Blinding lights%", Utils.convertToQuery("Blinding lights"))
+        assertEquals("% %", Utils.convertToQuery(" "))
     }
 }

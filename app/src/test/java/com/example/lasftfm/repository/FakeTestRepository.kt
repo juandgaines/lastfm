@@ -1,14 +1,32 @@
 package com.example.lasftfm.repository
 
-class FakeTestRepository:RepoOperations {
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import com.example.lasftfm.UtilsTesting
+import com.example.lasftfm.repository.db.ListDataSource
 
+class FakeTestRepository : RepoOperations {
+
+    private var _tracks = UtilsTesting.getTrackList()
+    private var _artist = UtilsTesting.getArtisList()
+    private var networkErrors = MutableLiveData<String>()
 
     override fun fetch(query: String): TrackResults {
-        TODO("Not yet implemented")
+
+        val dataSourceFactory = ListDataSource(_tracks)
+        val data = LivePagedListBuilder(dataSourceFactory!!, 20)
+            .build()
+
+        return TrackResults(data, networkErrors)
+
     }
 
     override fun fetchArtist(query: String): ArtistsResults {
-        TODO("Not yet implemented")
+        val dataSourceFactory = ListDataSource(_artist)
+        val data = LivePagedListBuilder(dataSourceFactory!!, 20)
+            .build()
+
+        return ArtistsResults(data, networkErrors)
     }
 
     override fun disposeJob() {

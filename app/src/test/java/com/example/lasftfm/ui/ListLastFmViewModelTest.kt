@@ -1,30 +1,37 @@
 package com.example.lasftfm.ui
 
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.lasftfm.getOrAwaitValue
+import com.example.lasftfm.repository.FakeTestRepository
 import com.example.lasftfm.repository.network.Artist
 import com.example.lasftfm.repository.network.Artist2
 import com.example.lasftfm.repository.network.Image
 import com.example.lasftfm.repository.network.Track
-import org.junit.Assert.*
+import org.hamcrest.CoreMatchers
+import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+
 class ListLastFmViewModelTest {
+
+    private lateinit var repository: FakeTestRepository
+    private lateinit var lastFmViewModel: ListLastFmViewModel
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    @Before
+    fun createRepository() {
+        repository = FakeTestRepository()
+        lastFmViewModel = ListLastFmViewModel(repository)
+    }
+
     @Test
     fun selectedTrack_setTrackSelected() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val lastFmViewModel = ListLastFmViewModel(context)
 
         lastFmViewModel.setTrackSelected(
             Track(
@@ -37,14 +44,12 @@ class ListLastFmViewModelTest {
                 Artist("", "", "")
             )
         )
-        val value=lastFmViewModel.selectedTrackLiveData.getOrAwaitValue()
-        assertEquals(value.name,"God save the queen")
+        val value = lastFmViewModel.selectedTrackLiveData.getOrAwaitValue()
+        assertEquals(value.name, "God save the queen")
     }
 
     @Test
     fun selectedArtist_setArtistSelected() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val lastFmViewModel = ListLastFmViewModel(context)
 
         lastFmViewModel.setArtistSelected(
             Artist2(
@@ -56,8 +61,30 @@ class ListLastFmViewModelTest {
                 ""
             )
         )
-        val value=lastFmViewModel.selectedArtistLiveData.getOrAwaitValue()
-        assertEquals(value.name,"Bad Bunny")
+        val value = lastFmViewModel.selectedArtistLiveData.getOrAwaitValue()
+        assertEquals(value.name, "Bad Bunny")
+    }
+
+
+    @Test
+    fun fetchTracks_dummyData_returnFakeDataOkAndErrorNull() {
+
+        lastFmViewModel.fetchTracks("")
+        val tracksResult = lastFmViewModel.tracks.getOrAwaitValue()
+        val trackErrors = lastFmViewModel.networkErrorsArtist.value
+        Assert.assertThat(tracksResult, CoreMatchers.not(CoreMatchers.nullValue()))
+        Assert.assertThat(trackErrors, CoreMatchers.nullValue())
+    }
+
+    @Test
+    fun fetchArtist_dummyData_returnFakeDataOkAndErrorNull() {
+
+        lastFmViewModel.fetchArtists("")
+        val artistResult = lastFmViewModel.artists.getOrAwaitValue()
+        val artistErrors = lastFmViewModel.networkErrors.value
+        Assert.assertThat(artistResult, CoreMatchers.not(CoreMatchers.nullValue()))
+        Assert.assertThat(artistErrors, CoreMatchers.nullValue())
+
     }
 
 }

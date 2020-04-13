@@ -6,9 +6,10 @@ import com.example.lasftfm.repository.network.Artist2
 import com.example.lasftfm.repository.network.Track
 import kotlinx.coroutines.CoroutineScope
 
-class LastFmFakeDataSource( var listArtists:MutableList<Artist2>,
-                            var listTrack: MutableList<Track>
-                            ): LastFmDataSource{
+class LastFmFakeDataSource(
+    var listArtists: MutableList<Artist2>,
+    var listTrack: MutableList<Track>
+) : LastFmDataSource {
 
     private lateinit var coroutineScope: CoroutineScope
 
@@ -53,6 +54,6 @@ class LastFmFakeDataSource( var listArtists:MutableList<Artist2>,
     }
 
     override fun setCoroutine(scope: CoroutineScope) {
-        coroutineScope=scope
+        coroutineScope = scope
     }
 }

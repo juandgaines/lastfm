@@ -14,8 +14,10 @@ class ListDataSource<T>(private val items: List<T>) : DataSource.Factory<Int, T>
     }
 
     class FakeDataSource<T>(var items: List<T>) : PositionalDataSource<T>() {
-        override fun loadInitial(params: LoadInitialParams,
-                                 callback: LoadInitialCallback<T>) {
+        override fun loadInitial(
+            params: LoadInitialParams,
+            callback: LoadInitialCallback<T>
+        ) {
             val totalCount = items.size
 
             val position = computeInitialLoadPosition(params, totalCount)
@@ -25,10 +27,16 @@ class ListDataSource<T>(private val items: List<T>) : DataSource.Factory<Int, T>
             callback.onResult(sublist, position, totalCount)
         }
 
-        override fun loadRange(params: LoadRangeParams,
-                               callback: LoadRangeCallback<T>) {
-            callback.onResult(items.subList(params.startPosition,
-                params.startPosition + params.loadSize))
+        override fun loadRange(
+            params: LoadRangeParams,
+            callback: LoadRangeCallback<T>
+        ) {
+            callback.onResult(
+                items.subList(
+                    params.startPosition,
+                    params.startPosition + params.loadSize
+                )
+            )
         }
     }
 }
