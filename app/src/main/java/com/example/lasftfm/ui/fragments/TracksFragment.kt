@@ -3,19 +3,18 @@ package com.example.lasftfm.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-
+import com.example.lasftfm.MyApplication
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentTracksBinding
-import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.ui.LastFmViewModelFactory
 import com.example.lasftfm.ui.ListLastFmViewModel
 import com.example.lasftfm.ui.adapters.TrackAdapter
@@ -33,7 +32,8 @@ class TracksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val viewModelFactory = LastFmViewModelFactory(LastFmRepo.getRepository(requireActivity().application))
+        val viewModelFactory =
+            LastFmViewModelFactory((requireContext().applicationContext as MyApplication).repoLastFm)
         lastFmViewModel =
             ViewModelProvider(activity!!, viewModelFactory).get(ListLastFmViewModel::class.java)
         binding =
@@ -51,8 +51,8 @@ class TracksFragment : Fragment() {
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query= s.toString()
-                lastFmViewModel.queryLiveDataTracks=query
+                val query = s.toString()
+                lastFmViewModel.queryLiveDataTracks = query
                 adapterTracks.submitList(null)
                 lastFmViewModel.fetchTracks(query)
             }
@@ -61,7 +61,7 @@ class TracksFragment : Fragment() {
         binding.searchText.setText(lastFmViewModel.queryLiveDataTracks)
 
         lastFmViewModel.tracks.observe(viewLifecycleOwner, Observer {
-            Timber.tag(TracksFragment::class.java.simpleName).d( "list: ${it?.size}")
+            Timber.tag(TracksFragment::class.java.simpleName).d("list: ${it?.size}")
             adapterTracks.submitList(it)
         })
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
@@ -78,7 +78,8 @@ class TracksFragment : Fragment() {
         adapterTracks =
             TrackAdapter(TrackListener {
                 lastFmViewModel.setTrackSelected(it)
-                activity?.findNavController(R.id.myNavHostFragment)?.navigate(R.id.action_tracksFragment_to_detailFragment)
+                activity?.findNavController(R.id.myNavHostFragment)
+                    ?.navigate(R.id.action_tracksFragment_to_detailFragment)
             })
         binding.trackList.adapter = adapterTracks
 

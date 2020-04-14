@@ -18,20 +18,4 @@ abstract class LastFmDatabase : RoomDatabase() {
 
     abstract fun lastFmDao(): LastFmDao
 
-    companion object {
-
-        @Volatile
-        private var INSTANCE: LastFmDatabase? = null
-
-        fun getInstance(context: Context): LastFmDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE
-                    ?: buildDatabase(context).also { INSTANCE = it }
-            }
-
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                LastFmDatabase::class.java, "lastfm_database.db")
-                .build()
-    }
 }

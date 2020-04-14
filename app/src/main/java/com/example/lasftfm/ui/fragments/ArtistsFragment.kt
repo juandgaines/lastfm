@@ -3,19 +3,18 @@ package com.example.lasftfm.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-
+import com.example.lasftfm.MyApplication
 import com.example.lasftfm.R
 import com.example.lasftfm.databinding.FragmentArtistsBinding
-import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.ui.LastFmViewModelFactory
 import com.example.lasftfm.ui.ListLastFmViewModel
 import com.example.lasftfm.ui.adapters.ArtistListener
@@ -35,7 +34,8 @@ class ArtistsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val viewModelFactory = LastFmViewModelFactory(LastFmRepo.getRepository(requireActivity().application))
+        val viewModelFactory =
+            LastFmViewModelFactory((requireContext().applicationContext as MyApplication).repoLastFm)
         lastFmViewModel =
             ViewModelProvider(activity!!, viewModelFactory).get(ListLastFmViewModel::class.java)
         binding =
@@ -54,8 +54,8 @@ class ArtistsFragment : Fragment() {
                 Unit
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query= s.toString()
-                lastFmViewModel.queryLiveDataArtists= query
+                val query = s.toString()
+                lastFmViewModel.queryLiveDataArtists = query
                 adapterArtists.submitList(null)
                 lastFmViewModel.fetchArtists(query)
             }
@@ -64,7 +64,7 @@ class ArtistsFragment : Fragment() {
         binding.searchText.setText(lastFmViewModel.queryLiveDataArtists)
 
         lastFmViewModel.artists.observe(viewLifecycleOwner, Observer {
-            Timber.tag(ArtistsFragment::class.java.simpleName).d( "list: ${it?.size}")
+            Timber.tag(ArtistsFragment::class.java.simpleName).d("list: ${it?.size}")
             adapterArtists.submitList(it)
         })
         lastFmViewModel.networkErrors.observe(viewLifecycleOwner, Observer<String> {
@@ -80,7 +80,8 @@ class ArtistsFragment : Fragment() {
         adapterArtists =
             ArtistsAdapter(ArtistListener {
                 lastFmViewModel.setArtistSelected(it)
-                activity?.findNavController(R.id.myNavHostFragment)?.navigate(R.id.action_artistsFragment_to_detailFragment)
+                activity?.findNavController(R.id.myNavHostFragment)
+                    ?.navigate(R.id.action_artistsFragment_to_detailFragment)
             })
         binding.artistList.adapter = adapterArtists
 

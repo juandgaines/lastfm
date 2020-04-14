@@ -1,10 +1,6 @@
 package com.example.lasftfm.repository
 
-import android.app.Application
 import androidx.paging.LivePagedListBuilder
-import com.example.lasftfm.repository.db.LastFmCache
-import com.example.lasftfm.repository.db.LastFmDatabase
-import com.example.lasftfm.repository.network.Network
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -55,20 +51,6 @@ class LastFmRepo(
     }
 
     companion object {
-
-        @Volatile
-        private var INSTANCE: LastFmRepo? = null
-
-        fun getRepository(app: Application): LastFmRepo {
-            return INSTANCE ?: synchronized(this) {
-
-                LastFmRepo(
-                    Network.getNetworkProvider(),
-                    LastFmCache(LastFmDatabase.getInstance(app))
-                )
-
-            }
-        }
 
         private const val DATABASE_PAGE_SIZE = 20
     }

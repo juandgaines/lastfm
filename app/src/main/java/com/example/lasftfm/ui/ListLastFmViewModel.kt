@@ -3,12 +3,11 @@ package com.example.lasftfm.ui
 import androidx.lifecycle.*
 import androidx.paging.PagedList
 import com.example.lasftfm.Utils
-import com.example.lasftfm.repository.network.Artist2
-import com.example.lasftfm.repository.network.Track
 import com.example.lasftfm.repository.ArtistsResults
-import com.example.lasftfm.repository.LastFmRepo
 import com.example.lasftfm.repository.RepoOperations
 import com.example.lasftfm.repository.TrackResults
+import com.example.lasftfm.repository.network.Artist2
+import com.example.lasftfm.repository.network.Track
 
 class ListLastFmViewModel(private val repository: RepoOperations) :
     ViewModel() {
@@ -62,12 +61,13 @@ class ListLastFmViewModel(private val repository: RepoOperations) :
         repository.disposeJob()
     }
 
-    fun setTrackSelected(track:Track?){
-        _selectedTrackLiveData.value=track
+    fun setTrackSelected(track: Track?) {
+        _selectedTrackLiveData.value = track
 
     }
-    fun setArtistSelected(artist:Artist2?){
-        _selectedArtistLiveData.value=artist
+
+    fun setArtistSelected(artist: Artist2?) {
+        _selectedArtistLiveData.value = artist
     }
 
 }
